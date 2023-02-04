@@ -12,11 +12,12 @@ public class Birds : MonoBehaviour
     
 
     //variable to control bird's direction when moving in the scene
-    private bool headingRight = true;
+    private bool headingLeft = true;
     private float xDirection = 1f;
     private float yDirection = 0.5f;
-    private float leftLimit = -10f;
-    private float rightLimit = 20f;
+    private float leftLimit;
+    private float rightLimit;
+    public float startX;
     public float startY;
 
     //variables concerning attacking
@@ -24,13 +25,14 @@ public class Birds : MonoBehaviour
     public Transform playerObject;
     public Vector3 target;
     private Vector3 direction;
-    public float aggroDist = 15f;
-    private bool birdAttacking = false;
-    private bool birdReturning = false;
+    public Vector2 point;
+    public float aggroDist = 10f;
+    public bool birdAttacking = false;
     public float characterDistance = 30f;
+    public float pointDistance = 30f;
     public float targetX;
     public float targetY;
-  
+        
     //variables for determining if the bird is grounded and checks if the empty groundCheck variable
     //private bool isGrounded = false;
     //public Transform groundCheck;
@@ -48,7 +50,12 @@ public class Birds : MonoBehaviour
     void Start()
     {
         birdSpeed = 2;
+        startX = transform.position.x;
         startY = transform.position.y;
+        rightLimit = startX + 20;
+        leftLimit = startX - 20;
+        target = new Vector2(0.0f, 0.0f);
+        point = new Vector2();
     }
 
     // Update is called once per frame
@@ -66,41 +73,62 @@ public class Birds : MonoBehaviour
 
     /*private void birdRotate()
     {
-        //Determines if the bird is facing either right or left with the headingRight variable and calculating the xDirection variable to flip the character accordingly.
-        if (xDirection > 0 && !headingRight)
+        //Determines if the bird is facing either right or left with the headingLeft variable and calculating the xDirection variable to flip the character accordingly.
+        if (xDirection > 0 && !headingLeft)
         {
-            TurnCharacter();
+            FlipBird();
         }
-        else if (xDirection < 0 && headingRight)
+        else if (xDirection < 0 && headingLeft)
         {
-            TurnCharacter();
+            FlipBird();
         }
     }*/
 
     private void DetectCharacter()
     {
         //Checks to see if the character is within a certain distance
-        if (!birdReturning)
+        
+        characterDistance = Vector3.Distance(birdRb.position, playerObject.transform.position);
+        if (birdAttacking)
         {
-            characterDistance = Vector3.Distance(birdRb.position, playerObject.transform.position);
-            if (characterDistance <= aggroDist)
+            pointDistance = Vector3.Distance(birdRb.position, point);
+            if (pointDistance <= 0.1f || characterDistance >= aggroDist +10)
             {
-                //birdAttacking = true;
-                birdSpeed = 4;
-                target = playerObject.transform.position;
-                
-                //targetX = playerObject.transform.position.x;
-                //targetY = playerObject.transform.position.y;
+                birdAttacking = false;
+                birdSpeed = 2;
             }
         }
+        else
+        {
+            if (characterDistance <= aggroDist && (!birdAttacking))
+            {
+                birdAttacking = true;
+                birdSpeed = 6;
+                //targetX = playerObject.transform.position.x;
+                //targetY = playerObject.transform.position.y;
+                point = new Vector2(playerObject.transform.position.x, playerObject.transform.position.y);
+                if (headingLeft && (transform.position.x - point.x <=0))
+                {
+                    FlipBird();
+                }
+                else
+                {
+                    if (!headingLeft && (transform.position.x - point.x > 0))
+                    {
+                        FlipBird();
+                    }
+                }
+            }
+        }
+       
 
 
     }
 
-    private void TurnCharacter()
+    private void FlipBird()
     {
-        //Rotates the character to the opposite side when they are moving a certain direction
-        headingRight = !headingRight;
+        //Flips the bird (HA!) when they change direction
+        headingLeft = !headingLeft;
         transform.Rotate(0f, 180f, 0f);
     }
 
@@ -110,23 +138,43 @@ public class Birds : MonoBehaviour
         birdRb.velocity = new Vector2(birdSpeed * xDirection, birdSpeed * yDirection);
         if (birdAttacking)
         {
-            direction = Vector2.MoveTowards(transform.position, target, birdSpeed);
+            Vector2 newPosition = Vector2.MoveTowards(transform.position, point, Time.deltaTime * birdSpeed);
+            birdRb.MovePosition(newPosition);
 
 
-            transform.position = transform.position + direction;
+
+
+            float step = birdSpeed * Time.deltaTime;
+
+
+            // move bird towards the target location
+            // transform.position = Vector2.MoveTowards(transform.position, point, step);
+
+
+            //direction = Vector2.MoveTowards(transform.position, target, birdSpeed);
+            //transform.position = transform.position + direction;
 
         }
         else
         {
+            
             //see if bird has passed right or left boundaries
             if (transform.position.x > rightLimit)
             {
+                if (!headingLeft)
+                {
+                    FlipBird();
+                }
                 xDirection = -1f;
             }
             else
             {
                 if (transform.position.x < leftLimit)
                 {
+                    if (headingLeft)
+                    {
+                        FlipBird();
+                    }
                     xDirection = 1f;
                 }
             }
@@ -143,6 +191,7 @@ public class Birds : MonoBehaviour
                 }
             }
             birdRb.MovePosition(birdRb.position + birdRb.velocity * Time.fixedDeltaTime);
+            
         }
     }
 
