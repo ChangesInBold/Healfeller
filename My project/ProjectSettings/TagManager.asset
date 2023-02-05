@@ -8,6 +8,7 @@ TagManager:
   - LV2
   - Acorn
   - Bird
+  - Win
   layers:
   - Default
   - TransparentFX

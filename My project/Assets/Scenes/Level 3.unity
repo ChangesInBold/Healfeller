@@ -4491,7 +4491,7 @@ GameObject:
   - component: {fileID: 1035186241}
   m_Layer: 0
   m_Name: Level Finish
-  m_TagString: LV1
+  m_TagString: Win
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5651,7 +5651,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1402324551}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: ed9dda5064fdbb745af77a3afce101e5, type: 2}
   m_CullingMode: 0
@@ -6915,7 +6915,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1582534772}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: ed9dda5064fdbb745af77a3afce101e5, type: 2}
   m_CullingMode: 0
@@ -7153,7 +7153,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1680812098}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: ed9dda5064fdbb745af77a3afce101e5, type: 2}
   m_CullingMode: 0
