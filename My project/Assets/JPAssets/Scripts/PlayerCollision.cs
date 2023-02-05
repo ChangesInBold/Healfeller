@@ -7,7 +7,7 @@ public class PlayerCollision : MonoBehaviour
 {
 
     //variable to call the Player Health Script
-    PlayerHealth playerHealth;
+    [SerializeField] PlayerHealth playerHealth;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -26,7 +26,7 @@ public class PlayerCollision : MonoBehaviour
     public void TakeDamage()
     {
         playerHealth.currentHealth = playerHealth.currentHealth -= 1;
-        if (playerHealth.currentHealth >= 0)
+        if (playerHealth.currentHealth <= 0)
         {
             SceneManager.LoadScene("Main Menu");
         }
