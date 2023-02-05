@@ -6,6 +6,8 @@ TagManager:
   tags:
   - LV1
   - LV2
+  - Acorn
+  - Bird
   layers:
   - Default
   - TransparentFX

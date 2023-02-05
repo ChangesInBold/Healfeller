@@ -14,7 +14,7 @@ public class CameraFollow : MonoBehaviour
     void FixedUpdate()
     {
         //Syncs the camera's z position to the player's x and y position in the scene 
-        Vector3 newPos = new Vector3(playerTransform.position.x, playerTransform.position.y, -10f);
+        Vector3 newPos = new Vector3(playerTransform.position.x, playerTransform.position.y + yOffset, -10f);
         transform.position = Vector3.Slerp(transform.position, newPos, cameraSpeed * Time.deltaTime);
     }
 }

@@ -27,11 +27,11 @@ public class HealthBar : MonoBehaviour
         healthSlider.value = remainingHealth;
         if (healthSlider.value <= remainingHealth / 3)
         {
-            fillImage.color = Color.blue;
+            fillImage.color = Color.red;
         }
         else if (healthSlider.value >= remainingHealth / 3)
         {
-            fillImage.color = Color.black;
+            fillImage.color = Color.green;
         }
     }
 }
