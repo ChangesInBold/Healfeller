@@ -7,7 +7,7 @@ public class PlayerCollision : MonoBehaviour
 {
 
     //variable to call the Player Health Script
-    PlayerHealth playerHealth;
+    public PlayerHealth playerHealth;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

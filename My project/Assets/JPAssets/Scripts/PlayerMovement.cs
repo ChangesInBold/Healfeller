@@ -27,6 +27,9 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundObjects;
     public float radiusCheck;
 
+    //variable for the animator
+    public Animator animator;
+   private SpriteRenderer sprite;
 
     private void Awake()
     {
@@ -39,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //Adjusts the amount of jumps available to the player based on the jumping limit in the inspector with the default being 2 jumps for the player
         jumpAmount = jumpingLimit;
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -68,21 +72,25 @@ public class PlayerMovement : MonoBehaviour
     private void PlayerRotate()
     {
         //Determines if the player is facing either right or left with the headingRight variable and calculating the movementDirection variable to flip the character accordingly.
-        if (movementDirection > 0 && !headingRight)
+        if (movementDirection > 0)
         {
-            TurnCharacter();
+            //flips saprite if heading to right >
+            sprite.flipX = true;
+            //headingRight = false;
+
         }
-        else if (movementDirection < 0 && headingRight)
-        {
-            TurnCharacter();
+        else if (movementDirection < 0 )
+        { 
+            //flips saprite if heading to left <
+            sprite.flipX = false;
+           // headingRight = true;
+
         }
     }
 
     private void TurnCharacter()
     {
-        //Rotates the character to the opposite side when they are moving a certain direction
-        headingRight = !headingRight;
-        transform.Rotate(0f, 180f, 0f);
+       
     }
 
     private void MovePlayer()
@@ -102,9 +110,18 @@ public class PlayerMovement : MonoBehaviour
     {
         //Allows the player to move based on the keyboard inputs and if the player presses the button corresponding with jump and they have a jump available, the player will be able to jump.
         movementDirection = Input.GetAxisRaw("Horizontal");
+        if  (movementSpeed > 2)
+        {
+            animator.SetBool("isRunning", true);
+        }
+        else
+        {
+            animator.SetBool("IsRunning", false);
+        }
         if (Input.GetButtonDown("Jump") && jumpAmount > 0)
         {
             isJumping = true;
         }
     }
+
 }
