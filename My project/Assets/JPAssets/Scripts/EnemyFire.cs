@@ -36,7 +36,7 @@ public class EnemyFire : MonoBehaviour
         float playerDistance = Vector2.Distance(transform.position, player.transform.position);
         Debug.Log(playerDistance);
 
-        if (playerDistance < 5)
+        if (playerDistance < 10)
         {
             //If the player is at a certain distance from the enemy and 1 second has passed, then the enemy will create the acorn bullet and the timer for when they shoot will reset.
             shotTimer += Time.deltaTime;
